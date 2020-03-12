@@ -6,7 +6,7 @@ function DAG_delete_last_empty_trial(datapath)
 %datapath='C:\Users\dagadmin\Dropbox\DAG\Danial\monkey analysis\20131223';
 %DeleteLastTrial('Y:\Data\Curius_microstim_with_parameters\20140719')
 
-disp('DeleteLastTrial will be replaced, consider using monkeypsych_clean_data');
+disp('DeleteLastTrial will be replaced, consider using MPA_clean_data');
 
 dir_datapath=dir(datapath);
 for l=1: length(dir_datapath)
