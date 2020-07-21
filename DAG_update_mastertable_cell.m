@@ -5,7 +5,7 @@ function completed_table = DAG_update_mastertable_cell(original_table,table_for_
 % Order of columns does not matter, since this function compares the title
 % names in order to update the correct column (So title names are relevant and should match)
 % all rows_to_update should be larger than 1, first row should be titles!
-
+warning off
 
 titles_update=table_for_updating(1,:);
 titles_original_table=original_table(1,:);
@@ -30,4 +30,5 @@ for n_update_column=1:numel(titles_update)
     completed_table(logidx_columns,n_completed_column)=table_for_updating(logidx_columns,n_update_column);
     end
 end
+warning on
 end
