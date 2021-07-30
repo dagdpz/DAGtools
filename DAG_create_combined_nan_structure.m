@@ -10,19 +10,19 @@ size2=max(size(inputstructure1,2),size(inputstructure2,2));
 outputstructure=reshape(outputstructure,size1,size2);
 for k= 1: numel(field_names)
     if isfield(inputstructure1(1),field_names{k}) && isfield(inputstructure2(1),field_names{k}) && isstruct(inputstructure1(1).(field_names{k})) && isstruct(inputstructure2(1).(field_names{k}))
-        substructure=create_combined_nan_structure(inputstructure1(1).(field_names{k}),inputstructure2(1).(field_names{k}));
+        substructure=DAG_create_combined_nan_structure(inputstructure1(1).(field_names{k}),inputstructure2(1).(field_names{k}));
         substructurecell=repmat({substructure},size1,size2);
         tmp_struct=struct(field_names{k},substructurecell);
         [outputstructure.(field_names{k})]=tmp_struct.(field_names{k});
         
     elseif isfield(inputstructure1(1),field_names{k}) && isstruct(inputstructure1(1).(field_names{k}))
-        substructure=create_combined_nan_structure(inputstructure1(1).(field_names{k}),inputstructure1(1).(field_names{k}));
+        substructure=DAG_create_combined_nan_structure(inputstructure1(1).(field_names{k}),inputstructure1(1).(field_names{k}));
         substructurecell=repmat({substructure},size1,size2);
         tmp_struct=struct(field_names{k},substructurecell);
         [outputstructure.(field_names{k})]=tmp_struct.(field_names{k});
         
     elseif isfield(inputstructure2(1),field_names{k}) && isstruct(inputstructure2(1).(field_names{k}))
-        substructure=create_combined_nan_structure(inputstructure2(1).(field_names{k}),inputstructure2(1).(field_names{k}));
+        substructure=DAG_create_combined_nan_structure(inputstructure2(1).(field_names{k}),inputstructure2(1).(field_names{k}));
         substructurecell=repmat({substructure},size1,size2);
         tmp_struct=struct(field_names{k},substructurecell);
         [outputstructure.(field_names{k})]=tmp_struct.(field_names{k});
