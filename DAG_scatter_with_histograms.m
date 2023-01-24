@@ -8,7 +8,7 @@ y_values_scat=[SC.y_values{:}];
 hold on
 
 %% scatter
-for idx=1:numel(x_values_scat)
+for idx=numel(x_values_scat):-1:1 %% reversed order so that significant is always on top of nonsignificant...
     if ismember(SC.markers{idx},{'>','<','^','v'})
         markersize=SC.markersize*markerratio;
     else

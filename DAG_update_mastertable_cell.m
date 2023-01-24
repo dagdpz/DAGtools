@@ -5,7 +5,7 @@ function completed_table = DAG_update_mastertable_cell(original_table,table_for_
 % Order of columns does not matter, since this function compares the title
 % names in order to update the correct column (So title names are relevant and should match)
 % all rows_to_update should be larger than 1, first row should be titles!
-warning off
+%warning off
 
 titles_update=table_for_updating(1,:);
 titles_original_table=original_table(1,:);
@@ -30,5 +30,40 @@ for n_update_column=1:numel(titles_update)
     completed_table(logidx_columns,n_completed_column)=table_for_updating(logidx_columns,n_update_column);
     end
 end
-warning on
+
+% 
+% completed_table=original_table;
+%     [~, title_positions]=ismember(titles_update,titles_original_table);
+% for n_update_column=1:numel(titles_update)
+%     titles_completed_table=completed_table(1,:);
+%     all_updated_columns=1:size(titles_completed_table,2);
+%     if ismember(titles_update{n_update_column},titles_original_table)
+%         logidx_completed_column=ismember(titles_completed_table,titles_update{n_update_column});
+%         n_completed_column=all_updated_columns(logidx_completed_column);
+%     else
+%         n_completed_column=all_updated_columns(end)+1;
+%     end
+%     completed_table(1,n_completed_column)=titles_update(n_update_column);
+%     if ~all(isempty([table_for_updating{logidx_columns,n_update_column}])) ||...
+%             ~ismember(titles_update{n_update_column},titles_original_table)
+%         % only overwrite if new entry is meaningful
+%     completed_table(logidx_columns,n_completed_column)=table_for_updating(logidx_columns,n_update_column);
+%     end
+% end
+
+%% try using ismember outside the loop (?)
+%   titles_update=unit_table(1,:);
+%     titles_original_table=tuning_per_unit_table(1,:);
+%     [~, title_positions]=ismember(titles_update,titles_original_table);
+%     for n_update_column=1:numel(titles_update)
+%         XXX=title_positions(n_update_column);
+%         if XXX==0
+%             n_column=size(tuning_per_unit_table,2)+1;
+%             tuning_per_unit_table(1,n_column)=titles_update(n_update_column);
+%         else
+%             n_column=XXX;
+%         end
+%         tuning_per_unit_table(rows_to_update,n_column)=unit_table(2,n_update_column);
+%     end
+%warning on
 end
