@@ -4,7 +4,7 @@ closefig=0;
 end
 for fn=fieldnames(handles)'
     if isobject(handles.(fn{:}))
-        if closefig && isvalid(handles.(fn{:})) && strcmp(get(handles.(fn{:}),'type'),'figure')
+        if closefig && all(isvalid(handles.(fn{:}))) && all(strcmp(get(handles.(fn{:}),'type'),'figure'))
             close(handles.(fn{:}));
         end
         handles=rmfield(handles,fn{:});
