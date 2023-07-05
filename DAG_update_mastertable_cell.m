@@ -5,7 +5,7 @@ function completed_table = DAG_update_mastertable_cell(original_table,table_for_
 % Order of columns does not matter, since this function compares the title
 % names in order to update the correct column (So title names are relevant and should match)
 % all rows_to_update should be larger than 1, first row should be titles!
-%warning off
+warning off
 
 titles_update=table_for_updating(1,:);
 titles_original_table=original_table(1,:);
@@ -65,5 +65,5 @@ end
 %         end
 %         tuning_per_unit_table(rows_to_update,n_column)=unit_table(2,n_update_column);
 %     end
-%warning on
+warning on
 end
