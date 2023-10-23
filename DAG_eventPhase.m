@@ -22,6 +22,17 @@ function [eventPhases, eventsTaken] = DAG_eventPhase(interval_starts, interval_e
 % interval_ends = [1.1, 2.3, 3.6, 4.9, 6.2, 7.5, 8.8, 10.1, 11.4];
 % eventTimes = interval_starts + (interval_ends - interval_starts)/2;
 
+% make inputs vertical vectors
+if size(interval_starts, 2) > size(interval_starts, 1)
+    interval_starts = interval_starts';
+end
+if size(interval_ends, 2) > size(interval_ends, 1)
+    interval_ends = interval_ends';
+end
+if size(eventTimes, 2) > size(eventTimes, 1)
+    eventTimes = eventTimes';
+end
+
 % Calculate ECG cycle durations
 cycleDurations = interval_ends - interval_starts;
 
@@ -33,6 +44,6 @@ eventTimes = eventTimes(events2include); % include only events that didn't land 
 cycleNums = [cycleNums{:}];
 eventTimesNorm = (eventTimes - interval_starts(cycleNums)) ./ cycleDurations(cycleNums);
 eventPhases = 2*pi*eventTimesNorm;
-eventsTaken = single(find(events2include));
+eventsTaken = single(find(events2include))';
 end
 
