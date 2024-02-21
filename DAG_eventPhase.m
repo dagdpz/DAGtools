@@ -1,4 +1,4 @@
-function [eventPhases, eventsTaken] = DAG_eventPhase(interval_starts, interval_ends, eventTimes)
+function [eventPhases, eventsTaken, cycleNums_withSpikes, cycleNums_withoutSpikes] = DAG_eventPhase(interval_starts, interval_ends, eventTimes)
 % eventPhase: This function calculates the phase of the event related to a
 % cycle of a cyclic process (e.g. heart beat, or breathing)
 %
@@ -37,12 +37,13 @@ end
 cycleDurations = interval_ends - interval_starts;
 
 % Normalize event times to the respective ECG cycle durations
-cycleNums = arrayfun(@(x) find(x > interval_starts & x < interval_ends), eventTimes, 'UniformOutput', false); % for each event find the corresponding cycle number
-events2include = cellfun(@(x) ~isempty(x), cycleNums, 'UniformOutput', false); % find event indices that landed in any interval of the cyclic process
+cycleNums_withSpikes = arrayfun(@(x) find(x > interval_starts & x < interval_ends), eventTimes, 'UniformOutput', false); % for each event find the corresponding cycle number
+events2include = cellfun(@(x) ~isempty(x), cycleNums_withSpikes, 'UniformOutput', false); % find event indices that landed in any interval of the cyclic process
 events2include = [events2include{:}];
 eventTimes = eventTimes(events2include); % include only events that landed within any interval
-cycleNums = [cycleNums{:}];
-eventTimesNorm = (eventTimes - interval_starts(cycleNums)) ./ cycleDurations(cycleNums);
+cycleNums_withSpikes    = [cycleNums_withSpikes{:}];
+cycleNums_withoutSpikes = setdiff(1:length(interval_starts), cycleNums_withSpikes);
+eventTimesNorm = (eventTimes - interval_starts(cycleNums_withSpikes)) ./ cycleDurations(cycleNums_withSpikes);
 eventPhases = 2*pi*eventTimesNorm;
 eventsTaken = single(find(events2include))';
 end
