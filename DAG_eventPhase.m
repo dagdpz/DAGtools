@@ -1,4 +1,4 @@
-function [eventPhases, eventsTaken, cycleNums_withSpikes, cycleNums_withoutSpikes] = DAG_eventPhase(interval_starts, interval_ends, eventTimes)
+function [eventPhases, eventsTaken, cycleNums_withSpikes] = DAG_eventPhase(interval_starts, interval_ends, eventTimes)
 % eventPhase: This function calculates the phase of the event related to a
 % cycle of a cyclic process (e.g. heart beat, or breathing)
 %
@@ -42,9 +42,7 @@ events2include = cellfun(@(x) ~isempty(x), cycleNums_withSpikes, 'UniformOutput'
 events2include = [events2include{:}];
 eventTimes = eventTimes(events2include); % include only events that landed within any interval
 cycleNums_withSpikes    = [cycleNums_withSpikes{:}];
-cycleNums_withoutSpikes = setdiff(1:length(interval_starts), cycleNums_withSpikes);
 eventTimesNorm = (eventTimes - interval_starts(cycleNums_withSpikes)) ./ cycleDurations(cycleNums_withSpikes);
 eventPhases = 2*pi*eventTimesNorm;
 eventsTaken = single(find(events2include))';
 end
-
