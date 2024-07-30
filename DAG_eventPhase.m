@@ -31,12 +31,9 @@ eventTimes = eventTimes(:);
 cycleDurations = interval_ends - interval_starts;
 
 % Normalize event times to the respective ECG cycle durations
-cycleNums_withSpikes = arrayfun(@(x) find(x > interval_starts & x < interval_ends), eventTimes, 'UniformOutput', false); % for each event find the corresponding cycle number
-events2include = cellfun(@(x) ~isempty(x), cycleNums_withSpikes, 'UniformOutput', false); % find event indices that landed in any interval of the cyclic process
-events2include = [events2include{:}];
+[events2include,cycleNums_withSpikes] = find(eventTimes > interval_starts' & ...
+    eventTimes < interval_ends');
 eventTimes = eventTimes(events2include); % include only events that landed within any interval
-cycleNums_withSpikes    = [cycleNums_withSpikes{:}];
-cycleNums_withSpikes    = cycleNums_withSpikes(:);
 eventTimesNorm = (eventTimes - interval_starts(cycleNums_withSpikes)) ./ cycleDurations(cycleNums_withSpikes);
 eventPhases = 2*pi*eventTimesNorm;
 eventsTaken = single(find(events2include))';
